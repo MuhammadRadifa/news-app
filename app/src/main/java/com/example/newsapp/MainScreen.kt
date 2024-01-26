@@ -74,9 +74,7 @@ fun TopBar(){
 }
 
 @Composable
-fun BottomBar(){
-
-}
+fun BottomBar(){}
 
 
 @Preview(showBackground = true, showSystemUi = true)
