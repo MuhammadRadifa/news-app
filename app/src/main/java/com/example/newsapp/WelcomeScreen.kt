@@ -86,7 +86,7 @@ fun WelcomeScreen(){
                 Button(
                     onClick = { /*TODO*/ },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.colorScheme.onBackground
                     )
                 ) {
                     Row{
