@@ -42,9 +42,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun WelcomeScreen(){
+fun WelcomeScreen(rootNavController:NavHostController){
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter,
@@ -85,7 +86,7 @@ fun WelcomeScreen(){
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { rootNavController.navigate("mainScreen") },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.onBackground
                     )
@@ -102,10 +103,4 @@ fun WelcomeScreen(){
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WelcomePreview(){
-    WelcomeScreen()
 }

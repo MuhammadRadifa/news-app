@@ -30,19 +30,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun MainScreen(rootNavController: NavHostController){
-    val navBackStackEntry by rootNavController.currentBackStackEntryAsState()
-    Log.i("Controller",rootNavController.toString())
+fun MainScreen(){
+    val mainNavContoller = rememberNavController()
+    val navBackStackEntry by mainNavContoller.currentBackStackEntryAsState()
     Scaffold(
         topBar = { TopBar()},
-        bottomBar = { BottomBar(rootNavController,navBackStackEntry)},
+        bottomBar = { BottomBar(mainNavContoller,navBackStackEntry)},
         containerColor = Color.White
     ){
         innerPadding ->
-        NavHost(rootNavController, startDestination = "home" ){
+        NavHost(mainNavContoller, startDestination = "home" ){
             composable(route="home"){
                 Text(text = "home", modifier = Modifier.padding(innerPadding))
             }
