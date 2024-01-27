@@ -45,7 +45,7 @@ fun MainScreen(){
         innerPadding ->
         NavHost(mainNavContoller, startDestination = "home" ){
             composable(route="home"){
-                Text(text = "home", modifier = Modifier.padding(innerPadding))
+                HomeScreen(innerPadding = innerPadding)
             }
             composable(route="explore"){
                 Text(text = "explore", modifier = Modifier.padding(innerPadding))
