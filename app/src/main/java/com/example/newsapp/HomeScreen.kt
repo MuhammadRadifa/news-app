@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,16 +19,18 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -34,7 +38,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(innerPadding:PaddingValues){
     Column(
-        modifier = Modifier.padding(innerPadding)
+        modifier = Modifier
+            .padding(innerPadding)
+            .padding(16.dp)
+            .fillMaxSize()
     ) {
         val images = listOf("https://media.npr.org/assets/img/2021/08/11/gettyimages-1279899488_wide-f3860ceb0ef19643c335cb34df3fa1de166e2761-s1100-c50.jpg",
             "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__480.jpg",
@@ -43,8 +50,11 @@ fun HomeScreen(innerPadding:PaddingValues){
             "https://cdn.shopify.com/s/files/1/0535/2738/0144/articles/shutterstock_149121098_360x.jpg")
 
 
+        TextHead("Top News")
         ImageSlider(images)
-        Text(text = "hello")
+        Spacer(modifier = Modifier.height(16.dp))
+        TextHead("Latest News")
+        CardNews()
     }
 }
 
@@ -54,13 +64,10 @@ fun ImageSlider(images: List<Any>){
     var isAnimating by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-
+    Column(modifier = Modifier.fillMaxWidth()) {
         Box(modifier = Modifier
-            .weight(1f)
-            .height(100.dp)
-            .fillMaxWidth()
-            .padding(16.dp)) {
+            .height(200.dp)
+            .fillMaxWidth()) {
             // Scrollable Row of Cards
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
@@ -100,16 +107,57 @@ fun ImageSlider(images: List<Any>){
     }
 
     // Automatic Image Slider
-    LaunchedEffect(currentImageIndex) {
-        while (true) {
-            delay(5000L)
-            if (!isAnimating) {
-                val nextIndex = (currentImageIndex + 1) % images.size
-                currentImageIndex = nextIndex
-            }
+//    LaunchedEffect(currentImageIndex) {
+//        while (true) {
+//            delay(5000L)
+//            if (!isAnimating) {
+//                val nextIndex = (currentImageIndex + 1) % images.size
+//                currentImageIndex = nextIndex
+//            }
+//        }
+//    }
+
+}
+
+@Composable
+fun CardNews(){
+    Row(
+        modifier = Modifier.height(120.dp).fillMaxWidth().padding(8.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.pic),
+            contentDescription = "image",
+            modifier = Modifier.height(100.dp).width(100.dp),
+            contentScale = ContentScale.FillBounds
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Pemain Bali United dampingi Presiden RI tinjau IKN",
+                fontSize = 18.sp
+            )
+            Text(text = "1 Januari 2023")
         }
     }
+}
 
+@Composable
+fun TextHead(headlines:String){
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        Text(
+            text = headlines,
+            fontSize = 24.sp
+        )
+        Text(text = "See All")
+    }
+    Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Preview(showBackground = true)
