@@ -1,6 +1,7 @@
 package com.example.newsapp
 
-import androidx.compose.foundation.layout.Column
+
+import android.util.Log
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,29 +12,46 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+
 
 @Composable
-fun MainScreen(){
+fun MainScreen(rootNavController: NavHostController){
+    val navBackStackEntry by rootNavController.currentBackStackEntryAsState()
+    Log.i("Controller",rootNavController.toString())
     Scaffold(
         topBar = { TopBar()},
-        bottomBar = { BottomBar()},
+        bottomBar = { BottomBar(rootNavController,navBackStackEntry)},
         containerColor = Color.White
     ){
         innerPadding ->
-        Column(
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            Text(text = "hello")
+        NavHost(rootNavController, startDestination = "home" ){
+            composable(route="home"){
+                Text(text = "home", modifier = Modifier.padding(innerPadding))
+            }
+            composable(route="explore"){
+                Text(text = "explore", modifier = Modifier.padding(innerPadding))
+            }
+            composable(route="profile"){
+                Text(text = "profile", modifier = Modifier.padding(innerPadding))
+            }
         }
     }
 }
@@ -74,11 +92,38 @@ fun TopBar(){
 }
 
 @Composable
-fun BottomBar(){}
-
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun MainScreenPreview(){
-    MainScreen()
+fun BottomBar(rootNavController: NavHostController,navBackStackEntry: NavBackStackEntry?){
+    NavigationBar {
+        itemsNavigation.forEach{
+            items ->
+            val isSelected = items.title.lowercase() == navBackStackEntry?.destination?.route
+            NavigationBarItem(
+                selected = isSelected,
+                label = { Text(text = items.title)},
+                onClick = {
+                          rootNavController.navigate(items.title.lowercase()){
+                              popUpTo(rootNavController.graph.findStartDestination().id){
+                                  saveState = true
+                              }
+                              launchSingleTop = true
+                              restoreState = true
+                          }
+                },
+                icon = {
+                    Icon(
+                        imageVector = if(isSelected) items.selectedIcon else items.unSelectedIcon,
+                        contentDescription = items.title
+                    )
+                }
+            )
+        }
+    }
 }
+
+
+
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun MainScreenPreview(){
+//    MainScreen()
+//}
