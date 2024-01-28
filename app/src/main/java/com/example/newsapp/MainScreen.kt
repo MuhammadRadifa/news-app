@@ -47,8 +47,8 @@ fun MainScreen(){
             composable(route="home"){
                 HomeScreen(innerPadding = innerPadding)
             }
-            composable(route="explore"){
-                Text(text = "explore", modifier = Modifier.padding(innerPadding))
+            composable(route="category"){
+                CategoryScreen(innerPadding = innerPadding)
             }
             composable(route="profile"){
                 Text(text = "profile", modifier = Modifier.padding(innerPadding))
