@@ -53,13 +53,21 @@ fun MainScreen(viewState:MainViewModel.NewsState){
         innerPadding ->
         NavHost(mainNavContoller, startDestination = "home" ){
             composable(route="home"){
-                HomeScreen(innerPadding = innerPadding, viewState = viewState)
+                HomeScreen(innerPadding = innerPadding, viewState = viewState, DetailNavigate = {
+                    mainNavContoller.currentBackStackEntry?.savedStateHandle?.set("news",it)
+                    mainNavContoller.navigate("detailscreen")
+                })
             }
             composable(route="category"){
                 CategoryScreen(innerPadding = innerPadding)
             }
             composable(route="profile"){
                 ProfileScreen(innerPadding = innerPadding)
+            }
+            composable(route="detailscreen"){
+                val news = mainNavContoller.previousBackStackEntry?.savedStateHandle?.
+                    get<News>("news")?:News("Untitled","Not Found","","","")
+                DetailScreen(innerPadding = innerPadding,data = news, backNavigate = {mainNavContoller.navigate("home")})
             }
         }
     }

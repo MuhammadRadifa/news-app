@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,12 +38,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(innerPadding:PaddingValues,viewState:MainViewModel.NewsState){
+fun HomeScreen(innerPadding:PaddingValues,viewState:MainViewModel.NewsState,DetailNavigate:(News)->Unit){
     Column(
         modifier = Modifier
             .padding(innerPadding)
@@ -62,7 +64,7 @@ fun HomeScreen(innerPadding:PaddingValues,viewState:MainViewModel.NewsState){
         LazyColumn(){
             items(viewState.list){
                 items ->
-                CardNews(items)
+                CardNews(items,DetailNavigate)
             }
         }
 
@@ -130,12 +132,16 @@ fun ImageSlider(images: List<Any>){
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardNews(data:News){
+fun CardNews(data:News,DetailNavigate:(News)->Unit){
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White
-        )
+        ),
+        onClick = {
+            DetailNavigate(data)
+        }
     ) {
         Row(
             modifier = Modifier

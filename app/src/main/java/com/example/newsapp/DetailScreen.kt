@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -28,16 +29,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun DetailScreen(){
+fun DetailScreen(innerPadding:PaddingValues,data:News,backNavigate:()->Unit){
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(innerPadding)
     ) {
         Box(modifier = Modifier.height(300.dp)){
             Image(
-                painter = painterResource(id = R.drawable.pic),
-                contentDescription = "contoh",
+                painter = rememberAsyncImagePainter(data.image),
+                contentDescription = data.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
@@ -45,7 +47,7 @@ fun DetailScreen(){
                 modifier = Modifier.offset(x = 20.dp,y = 20.dp)
             ){
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { backNavigate() },
                     colors = IconButtonDefaults.iconButtonColors(
                         containerColor = Color.White
                     ),
@@ -59,27 +61,21 @@ fun DetailScreen(){
             modifier = Modifier.padding(16.dp)
         ) {
            Text(
-               text = "Pemain Bali United dampingi Presiden RI tinjau IKN",
+               text = data.title,
                fontSize = 28.sp,
                fontWeight = FontWeight.Medium
            )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "1 Januari 2022",
+                text = data.isoDate,
                 fontSize = 18.sp
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Forests are one of the most important natural resources that our planet possesses. Not only do they provide us with a diverse range of products such as timber, medicine, and food, but they also play a vital role in mitigating climate change and maintaining the overall health of our planet's ecosystems. In this article, we will explore the ways in which forests are helping our world.",
+                text = data.description,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Justify
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DetailScreenPreview(){
-    DetailScreen()
 }
