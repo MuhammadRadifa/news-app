@@ -1,6 +1,7 @@
 package com.example.newsapp
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -121,25 +125,36 @@ fun ImageSlider(images: List<Any>){
 
 @Composable
 fun CardNews(){
-    Row(
-        modifier = Modifier.height(120.dp).fillMaxWidth().padding(8.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.pic),
-            contentDescription = "image",
-            modifier = Modifier.height(100.dp).width(100.dp),
-            contentScale = ContentScale.FillBounds
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            modifier = Modifier
+                .height(120.dp)
+                .fillMaxWidth()
+                .padding(8.dp)
         ) {
-            Text(
-                text = "Pemain Bali United dampingi Presiden RI tinjau IKN",
-                fontSize = 18.sp
+            Image(
+                painter = painterResource(id = R.drawable.pic),
+                contentDescription = "image",
+                modifier = Modifier
+                    .height(100.dp)
+                    .width(100.dp),
+                contentScale = ContentScale.FillBounds
             )
-            Text(text = "1 Januari 2023")
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Pemain Bali United dampingi Presiden RI tinjau IKN",
+                    fontSize = 18.sp
+                )
+                Text(text = "1 Januari 2023")
+            }
         }
     }
 }

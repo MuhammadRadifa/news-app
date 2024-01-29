@@ -23,6 +23,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -42,8 +44,12 @@ val stationList = listOf<String>(
 @Composable
 fun CategoryScreen(innerPadding:PaddingValues){
     Column(
-        modifier = Modifier.fillMaxSize().padding(innerPadding)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+            .padding(horizontal = 30.dp)
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Category",
             fontSize = 28.sp,
@@ -64,12 +70,12 @@ fun CategoryScreen(innerPadding:PaddingValues){
                     modifier = Modifier // margin left and right
                         .fillMaxWidth()
                         .background(
-                            color = Color(0xFFD2F3F2),
+                            color = Color.White,
                             shape = RoundedCornerShape(size = 16.dp)
                         )
                         .border(
                             width = 2.dp,
-                            color = Color(0xFFAAE9E6),
+                            color = Color.LightGray,
                             shape = RoundedCornerShape(size = 16.dp)
                         )
                         .padding(all = 16.dp), // inner padding
@@ -106,6 +112,13 @@ fun CategoryItem(station:String){
             .padding(top = 10.dp, bottom = 10.dp)
             .fillMaxWidth()
             .clickable { },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        ),
+        shape = RoundedCornerShape(10)
     ) {
         Row(
             modifier = Modifier

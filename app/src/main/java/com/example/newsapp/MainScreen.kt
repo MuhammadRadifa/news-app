@@ -2,6 +2,7 @@ package com.example.newsapp
 
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,12 +15,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +35,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
+val colorStops = arrayOf(
+    0.0f to Color.Yellow,
+    0.2f to Color.Red,
+    1f to Color.Blue
+)
 
 @Composable
 fun MainScreen(){
@@ -40,7 +48,7 @@ fun MainScreen(){
     Scaffold(
         topBar = { TopBar()},
         bottomBar = { BottomBar(mainNavContoller,navBackStackEntry)},
-        containerColor = Color.White
+        containerColor = Color(0xFFF7F8FA),
     ){
         innerPadding ->
         NavHost(mainNavContoller, startDestination = "home" ){
@@ -94,11 +102,16 @@ fun TopBar(){
 
 @Composable
 fun BottomBar(rootNavController: NavHostController,navBackStackEntry: NavBackStackEntry?){
-    NavigationBar {
+    NavigationBar(
+        containerColor = Color.White
+    ) {
         itemsNavigation.forEach{
             items ->
             val isSelected = items.title.lowercase() == navBackStackEntry?.destination?.route
             NavigationBarItem(
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color(0xFFF7F8FA)
+                ),
                 selected = isSelected,
                 label = { Text(text = items.title)},
                 onClick = {
@@ -123,8 +136,8 @@ fun BottomBar(rootNavController: NavHostController,navBackStackEntry: NavBackSta
 
 
 
-//@Preview(showBackground = true, showSystemUi = true)
-//@Composable
-//fun MainScreenPreview(){
-//    MainScreen()
-//}
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun MainScreenPreview(){
+    MainScreen()
+}

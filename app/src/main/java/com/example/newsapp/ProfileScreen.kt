@@ -39,6 +39,7 @@ fun ProfileScreen(innerPadding:PaddingValues){
             .padding(innerPadding)
             .padding(horizontal = 30.dp)
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
