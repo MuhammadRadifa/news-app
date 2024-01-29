@@ -51,7 +51,7 @@ fun MainScreen(){
                 CategoryScreen(innerPadding = innerPadding)
             }
             composable(route="profile"){
-                Text(text = "profile", modifier = Modifier.padding(innerPadding))
+                ProfileScreen(innerPadding = innerPadding)
             }
         }
     }
