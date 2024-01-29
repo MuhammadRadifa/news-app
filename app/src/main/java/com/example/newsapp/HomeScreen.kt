@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -40,7 +42,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(innerPadding:PaddingValues){
+fun HomeScreen(innerPadding:PaddingValues,viewState:MainViewModel.NewsState){
     Column(
         modifier = Modifier
             .padding(innerPadding)
@@ -53,12 +55,17 @@ fun HomeScreen(innerPadding:PaddingValues){
             "https://i.ytimg.com/vi/E9iP8jdtYZ0/maxresdefault.jpg",
             "https://cdn.shopify.com/s/files/1/0535/2738/0144/articles/shutterstock_149121098_360x.jpg")
 
-
         TextHead("Top News")
         ImageSlider(images)
         Spacer(modifier = Modifier.height(16.dp))
         TextHead("Latest News")
-        CardNews()
+        LazyColumn(){
+            items(viewState.list){
+                items ->
+                CardNews(items)
+            }
+        }
+
     }
 }
 
@@ -124,7 +131,7 @@ fun ImageSlider(images: List<Any>){
 }
 
 @Composable
-fun CardNews(){
+fun CardNews(data:News){
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White
@@ -137,8 +144,8 @@ fun CardNews(){
                 .padding(8.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.pic),
-                contentDescription = "image",
+                painter = rememberAsyncImagePainter(data.image),
+                contentDescription = data.title,
                 modifier = Modifier
                     .height(100.dp)
                     .width(100.dp),
@@ -150,10 +157,10 @@ fun CardNews(){
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Pemain Bali United dampingi Presiden RI tinjau IKN",
+                    text = data.title,
                     fontSize = 18.sp
                 )
-                Text(text = "1 Januari 2023")
+                Text(text = data.isoDate)
             }
         }
     }
@@ -173,13 +180,4 @@ fun TextHead(headlines:String){
         Text(text = "See All")
     }
     Spacer(modifier = Modifier.height(16.dp))
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview(){
-    Scaffold {
-        innerPadding ->
-        HomeScreen(innerPadding)
-    }
 }

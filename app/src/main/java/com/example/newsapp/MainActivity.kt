@@ -8,9 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,9 +40,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NewsApp(rootNavController:NavHostController){
+    val newsViewModel:MainViewModel = viewModel()
+    val viewState by newsViewModel.newsState
     NavHost(navController = rootNavController, startDestination = "welcome" ){
         composable(route="mainScreen"){
-            MainScreen()
+            MainScreen(viewState = viewState)
         }
         composable(route="welcome"){
             WelcomeScreen(rootNavController)

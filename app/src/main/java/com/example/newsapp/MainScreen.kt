@@ -42,7 +42,7 @@ val colorStops = arrayOf(
 )
 
 @Composable
-fun MainScreen(){
+fun MainScreen(viewState:MainViewModel.NewsState){
     val mainNavContoller = rememberNavController()
     val navBackStackEntry by mainNavContoller.currentBackStackEntryAsState()
     Scaffold(
@@ -53,7 +53,7 @@ fun MainScreen(){
         innerPadding ->
         NavHost(mainNavContoller, startDestination = "home" ){
             composable(route="home"){
-                HomeScreen(innerPadding = innerPadding)
+                HomeScreen(innerPadding = innerPadding, viewState = viewState)
             }
             composable(route="category"){
                 CategoryScreen(innerPadding = innerPadding)
@@ -134,10 +134,3 @@ fun BottomBar(rootNavController: NavHostController,navBackStackEntry: NavBackSta
     }
 }
 
-
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun MainScreenPreview(){
-    MainScreen()
-}
