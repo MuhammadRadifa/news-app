@@ -64,7 +64,7 @@ fun HomeScreen(innerPadding:PaddingValues,viewState:MainViewModel.NewsState,Deta
         LazyColumn(){
             items(viewState.list){
                 items ->
-                CardNews(items,DetailNavigate)
+                CardNews(items.copy(isoDate = convertTime(isoDate = items.isoDate)),DetailNavigate)
             }
         }
 
